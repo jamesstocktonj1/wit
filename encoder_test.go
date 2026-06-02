@@ -1,8 +1,6 @@
 package wit
 
 import (
-	"bufio"
-	"bytes"
 	"io"
 	"testing"
 
@@ -27,7 +25,7 @@ func TestEncodePack(t *testing.T) {
 				Package:   "bar",
 				Version:   "",
 			},
-			exp: "package foo:bar;",
+			exp: "foo:bar",
 		},
 		{
 			name: "package - with version",
@@ -36,7 +34,7 @@ func TestEncodePack(t *testing.T) {
 				Package:   "bat",
 				Version:   "0.1.2",
 			},
-			exp: "package bar:bat@0.1.2;",
+			exp: "bar:bat@0.1.2",
 		},
 		{
 			name: "package - with complex version",
@@ -45,19 +43,14 @@ func TestEncodePack(t *testing.T) {
 				Package:   "bat",
 				Version:   "3.1.2-rc5",
 			},
-			exp: "package foo:bat@3.1.2-rc5;",
+			exp: "foo:bat@3.1.2-rc5",
 		},
 	}
 
 	for _, tt := range testMatrix {
 		t.Run(tt.name, func(t *testing.T) {
-			var buf bytes.Buffer
-			enc := Encoder{w: bufio.NewWriter(&buf)}
-
-			enc.encodePackage(tt.pkg)
-			enc.w.Flush()
-
-			assert.Equal(t, tt.exp, buf.String())
+			res := tt.pkg.EncodeWIT()
+			assert.Equal(t, tt.exp, res)
 		})
 	}
 }

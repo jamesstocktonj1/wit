@@ -3,6 +3,7 @@ package wit
 import (
 	"bufio"
 	"io"
+	"strings"
 )
 
 type Encoder struct {
@@ -16,9 +17,7 @@ func NewEncoder(w io.Writer) *Encoder {
 }
 
 func (e *Encoder) Encode(w Wit) error {
-	e.encodePackage(w.Package)
-	e.w.WriteRune('\n')
-	e.encodeWorlds(w.Worlds)
+	e.w.WriteString(w.EncodeWIT())
 	return e.flush()
 }
 
@@ -29,43 +28,50 @@ func (e *Encoder) flush() error {
 	return e.w.Flush()
 }
 
-func (e *Encoder) encodePackage(p Package) {
-	e.w.WriteString("package ")
-	e.w.WriteString(p.Namespace)
-	e.w.WriteRune(':')
-	e.w.WriteString(p.Package)
+func (w Wit) EncodeWIT() string {
+	var b strings.Builder
+	if w.Package != nil {
+		b.WriteString("package ")
+		b.WriteString(w.Package.EncodeWIT())
+		b.WriteString(";\n")
+	}
+	for _, w := range w.Worlds {
+		b.WriteString(w.EncodeWIT())
+		b.WriteRune('\n')
+	}
+	return b.String()
+}
+
+func (p Package) EncodeWIT() string {
+	var b strings.Builder
+	b.WriteString(p.Namespace)
+	b.WriteRune(':')
+	b.WriteString(p.Package)
 	if p.Version != "" {
-		e.w.WriteRune('@')
-		e.w.WriteString(p.Version)
+		b.WriteRune('@')
+		b.WriteString(p.Version)
 	}
-	e.w.WriteRune(';')
+	return b.String()
 }
 
-func (e *Encoder) encodeWorlds(w []World) {
-	for i, n := range w {
-		e.encodeWorld(n)
-		if i != len(w)-1 {
-			e.w.WriteRune('\n')
-		}
-	}
-}
-
-func (e *Encoder) encodeWorld(w World) {
-	e.w.WriteString("world ")
-	e.w.WriteString(w.Name)
-	e.w.WriteString(" {")
+func (w World) EncodeWIT() string {
+	var b strings.Builder
+	b.WriteString("world ")
+	b.WriteString(w.Name)
+	b.WriteString(" {")
 	for _, imp := range w.Imports {
-		e.w.WriteString("\n  import ")
-		e.w.WriteString(imp)
-		e.w.WriteRune(';')
+		b.WriteString("\n  import ")
+		b.WriteString(imp)
+		b.WriteRune(';')
 	}
 	for _, exp := range w.Exports {
-		e.w.WriteString("\n  export ")
-		e.w.WriteString(exp)
-		e.w.WriteRune(';')
+		b.WriteString("\n  export ")
+		b.WriteString(exp)
+		b.WriteRune(';')
 	}
 	if len(w.Imports)+len(w.Exports) > 0 {
-		e.w.WriteRune('\n')
+		b.WriteRune('\n')
 	}
-	e.w.WriteRune('}')
+	b.WriteRune('}')
+	return b.String()
 }
