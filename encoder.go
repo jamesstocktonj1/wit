@@ -37,7 +37,6 @@ func (w Wit) EncodeWIT() string {
 	}
 	for _, w := range w.Worlds {
 		b.WriteString(w.EncodeWIT())
-		b.WriteRune('\n')
 	}
 	return b.String()
 }
@@ -73,5 +72,6 @@ func (w World) EncodeWIT() string {
 		b.WriteRune('\n')
 	}
 	b.WriteRune('}')
+	b.WriteRune('\n')
 	return b.String()
 }

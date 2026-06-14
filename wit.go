@@ -1,7 +1,7 @@
 package wit
 
 type Wit struct {
-	Package    Package
+	Package    *Package
 	Interfaces []Interface
 	Worlds     []World
 }

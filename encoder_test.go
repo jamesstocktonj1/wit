@@ -12,7 +12,7 @@ func TestNewEncoder(t *testing.T) {
 	assert.NotNil(t, enc)
 }
 
-func TestEncodePack(t *testing.T) {
+func TestEncodePackage(t *testing.T) {
 	testMatrix := []struct {
 		name string
 		pkg  Package
