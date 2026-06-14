@@ -9,6 +9,7 @@ type Wit struct {
 // Types
 type Type interface {
 	witType()
+	EncodeWIT() string
 }
 
 // Primitive Types
@@ -68,6 +69,7 @@ func (t TupleType) witType() {}
 // User-defined types
 // Records
 type Record struct {
+	Name   string
 	Fields []Field
 }
 
