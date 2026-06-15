@@ -9,7 +9,6 @@ type Record struct {
 func (r Record) witType() {}
 
 func (e *Encoder) encodeRecord(r Record) {
-	e.writeIndent()
 	e.writeString("record " + r.Name + " {")
 	e.writeReturn()
 	e.openBlock()

@@ -25,7 +25,7 @@ func NewEncoder(w io.Writer) *Encoder {
 }
 
 func (e *Encoder) Encode(w Wit) error {
-	e.w.WriteString(w.EncodeWIT())
+	e.encodeWit(w)
 	return e.flush()
 }
 

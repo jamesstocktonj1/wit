@@ -6,6 +6,20 @@ type Wit struct {
 	Worlds     []World
 }
 
+func (e *Encoder) encodeWit(w Wit) {
+	if w.Package != nil {
+		e.writeString("package ")
+		e.writeString(w.Package.EncodeWIT())
+		e.writeString(";\n")
+	}
+	for _, i := range w.Interfaces {
+		e.encodeInterface(i)
+	}
+	for _, w := range w.Worlds {
+		e.encodeWorld(w)
+	}
+}
+
 // Types
 type Type interface {
 	witType()
@@ -113,20 +127,6 @@ type Function struct {
 type Param struct {
 	Name string
 	Kind Type
-}
-
-// Interfaces
-type Interface struct {
-	Name      string
-	TypeDefs  []Type
-	Functions []Function
-}
-
-// Worlds
-type World struct {
-	Name    string
-	Imports []string
-	Exports []string
 }
 
 // Packages
