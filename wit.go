@@ -66,20 +66,6 @@ type TupleType struct {
 
 func (t TupleType) witType() {}
 
-// User-defined types
-// Records
-type Record struct {
-	Name   string
-	Fields []Field
-}
-
-func (t Record) witType() {}
-
-type Field struct {
-	Name string
-	Kind Type
-}
-
 // Variants
 type Variant struct {
 	Cases []Case
