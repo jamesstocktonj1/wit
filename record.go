@@ -8,6 +8,8 @@ type Record struct {
 
 func (r Record) witType() {}
 
+func (r Record) EncodeWIT() string { return "" }
+
 func (e *Encoder) encodeRecord(r Record) {
 	e.writeString("record " + r.Name + " {")
 	e.writeReturn()

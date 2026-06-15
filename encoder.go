@@ -59,71 +59,6 @@ func (e *Encoder) closeBlock() {
 	e.indent--
 }
 
-func (w Wit) EncodeWIT() string {
-	var b strings.Builder
-	if w.Package != nil {
-		b.WriteString("package ")
-		b.WriteString(w.Package.EncodeWIT())
-		b.WriteString(";\n")
-	}
-	for _, i := range w.Interfaces {
-		b.WriteString(i.EncodeWIT())
-	}
-	for _, w := range w.Worlds {
-		b.WriteString(w.EncodeWIT())
-	}
-	return b.String()
-}
-
-func (p Package) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString(p.Namespace)
-	b.WriteRune(':')
-	b.WriteString(p.Package)
-	if p.Version != "" {
-		b.WriteRune('@')
-		b.WriteString(p.Version)
-	}
-	return b.String()
-}
-
-func (w World) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString("world ")
-	b.WriteString(w.Name)
-	b.WriteString(" {")
-	for _, imp := range w.Imports {
-		b.WriteString("\n  import ")
-		b.WriteString(imp)
-		b.WriteRune(';')
-	}
-	for _, exp := range w.Exports {
-		b.WriteString("\n  export ")
-		b.WriteString(exp)
-		b.WriteRune(';')
-	}
-	if len(w.Imports)+len(w.Exports) > 0 {
-		b.WriteRune('\n')
-	}
-	b.WriteString("}\n")
-	return b.String()
-}
-
-func (i Interface) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString("interface ")
-	b.WriteString(i.Name)
-	b.WriteString(" {\n")
-	for _, t := range i.TypeDefs {
-		b.WriteString(t.EncodeWIT())
-	}
-	for _, f := range i.Functions {
-		b.WriteString(f.EncodeWIT())
-	}
-	b.WriteString("}\n")
-	return b.String()
-}
-
 func (f Function) EncodeWIT() string {
 	var b strings.Builder
 	b.WriteString("  ")
@@ -187,25 +122,5 @@ func (t TupleType) EncodeWIT() string {
 		}
 	}
 	b.WriteRune('>')
-	return b.String()
-}
-
-func (r Record) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString("  record ")
-	b.WriteString(r.Name)
-	b.WriteString(" {\n")
-	for i, f := range r.Fields {
-		b.WriteString("    ")
-		b.WriteString(f.Name)
-		b.WriteString(": ")
-		b.WriteString(f.Kind.EncodeWIT())
-		if i < len(r.Fields)-2 {
-			b.WriteString(",\n")
-		} else {
-			b.WriteRune('\n')
-		}
-	}
-	b.WriteString("  }\n")
 	return b.String()
 }
