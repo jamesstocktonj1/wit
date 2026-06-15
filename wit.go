@@ -8,9 +8,8 @@ type Wit struct {
 
 func (e *Encoder) encodeWit(w Wit) {
 	if w.Package != nil {
-		e.writeString("package ")
-		e.writeString(w.Package.EncodeWIT())
-		e.writeString(";\n")
+		e.encodePackage(*w.Package)
+		e.writeReturn()
 	}
 	for _, i := range w.Interfaces {
 		e.encodeInterface(i)
@@ -127,15 +126,4 @@ type Function struct {
 type Param struct {
 	Name string
 	Kind Type
-}
-
-// Packages
-//
-// package documentation:example;
-// package documentation:example@1.0.1;
-type Package struct {
-	Namespace string
-	Package   string
-	Interface []string
-	Version   string
 }
