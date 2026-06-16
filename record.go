@@ -18,7 +18,7 @@ func (e *Encoder) encodeRecord(r Record) {
 		e.writeIndent()
 		e.writeString(f.Name)
 		e.writeString(": ")
-		e.writeString(f.Kind.EncodeWIT())
+		e.encodeType(f.Kind)
 		e.writeReturn()
 	}
 	e.closeBlock()
@@ -31,4 +31,9 @@ func (e *Encoder) encodeRecord(r Record) {
 type Field struct {
 	Name string
 	Kind Type
+}
+
+func (e *Encoder) encodeField(f Field) {
+	e.writeString(f.Name + ": ")
+	e.encodeType(f.Kind)
 }

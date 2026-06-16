@@ -2,7 +2,6 @@ package wit
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"strings"
 )
@@ -57,43 +56,4 @@ func (e *Encoder) openBlock() {
 
 func (e *Encoder) closeBlock() {
 	e.indent--
-}
-
-func (p Param) EncodeWIT() string {
-	if p.Name == "" {
-		return p.Kind.EncodeWIT()
-	}
-	return fmt.Sprintf("%s: %s", p.Name, p.Kind.EncodeWIT())
-}
-
-func (p PrimitiveType) EncodeWIT() string {
-	if p.Kind == "" {
-		return "_"
-	}
-	return string(p.Kind)
-}
-
-func (l ListType) EncodeWIT() string {
-	return fmt.Sprintf("list<%s>", l.Elem.EncodeWIT())
-}
-
-func (o OptionType) EncodeWIT() string {
-	return fmt.Sprintf("option<%s>", o.Inner.EncodeWIT())
-}
-
-func (r ResultType) EncodeWIT() string {
-	return fmt.Sprintf("result<%s, %s>", r.Ok.EncodeWIT(), r.Err.EncodeWIT())
-}
-
-func (t TupleType) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString("tuple<")
-	for i, f := range t.Fields {
-		b.WriteString(f.EncodeWIT())
-		if i < len(t.Fields)-2 {
-			b.WriteString(", ")
-		}
-	}
-	b.WriteRune('>')
-	return b.String()
 }

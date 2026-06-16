@@ -20,7 +20,7 @@ func (e *Encoder) encodeFunction(f Function) {
 		e.writeString(");")
 	} else {
 		e.writeString(") -> ")
-		e.writeString(f.Results.EncodeWIT())
+		e.encodeParam(*f.Results)
 		e.writeString(";")
 	}
 	e.writeReturn()
@@ -30,5 +30,5 @@ func (e *Encoder) encodeParam(p Param) {
 	if p.Name != "" {
 		e.writeString(p.Name + ": ")
 	}
-	e.writeString(p.Kind.EncodeWIT())
+	e.encodeType(p.Kind)
 }

@@ -12,12 +12,7 @@ func (e *Encoder) encodeInterface(i Interface) {
 	e.openBlock()
 	for _, t := range i.TypeDefs {
 		e.writeIndent()
-		switch td := t.(type) {
-		case *Record:
-			e.encodeRecord(*td)
-		default:
-			e.writeString(td.EncodeWIT())
-		}
+		e.encodeType(t)
 	}
 	for _, f := range i.Functions {
 		e.writeIndent()
