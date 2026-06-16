@@ -59,33 +59,6 @@ func (e *Encoder) closeBlock() {
 	e.indent--
 }
 
-func (f Function) EncodeWIT() string {
-	var b strings.Builder
-	b.WriteString("  ")
-	b.WriteString(f.Name)
-	b.WriteString(": func(")
-	for i, p := range f.Params {
-		b.WriteString(p.EncodeWIT())
-		if i < len(f.Params)-2 {
-			b.WriteString(", ")
-		}
-	}
-	b.WriteString(")")
-	if len(f.Results) < 1 {
-		b.WriteString(";\n")
-		return b.String()
-	}
-	b.WriteString(" -> ")
-	for i, r := range f.Results {
-		b.WriteString(r.EncodeWIT())
-		if i < len(f.Results)-2 {
-			b.WriteString(", ")
-		}
-	}
-	b.WriteString(";\n")
-	return b.String()
-}
-
 func (p Param) EncodeWIT() string {
 	if p.Name == "" {
 		return p.Kind.EncodeWIT()

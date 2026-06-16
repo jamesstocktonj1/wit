@@ -115,15 +115,3 @@ type Alias struct {
 }
 
 func (t Alias) witType() {}
-
-// Functions
-type Function struct {
-	Name    string
-	Params  []Param
-	Results []Param
-}
-
-type Param struct {
-	Name string
-	Kind Type
-}

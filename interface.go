@@ -19,6 +19,10 @@ func (e *Encoder) encodeInterface(i Interface) {
 			e.writeString(td.EncodeWIT())
 		}
 	}
+	for _, f := range i.Functions {
+		e.writeIndent()
+		e.encodeFunction(f)
+	}
 	e.closeBlock()
 	e.writeString("}")
 	e.writeReturn()
