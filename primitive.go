@@ -30,6 +30,8 @@ func (e *Encoder) encodeType(t Type) {
 		e.encodeAlias(*tp)
 	case *Primitive:
 		e.writeString(string(*tp))
+	case *Reference:
+		e.encodeReference(*tp)
 	case *Record:
 		e.encodeRecord(*tp)
 	default:
@@ -57,8 +59,21 @@ const (
 
 func (p Primitive) witType() {}
 
-func NewPrimitive(p Primitive) Type {
+func NewPrimitive(p Primitive) *Primitive {
 	return &p
+}
+
+type Reference string
+
+func (r Reference) witType() {}
+
+func NewReference(ref string) *Reference {
+	r := Reference(ref)
+	return &r
+}
+
+func (e *Encoder) encodeReference(ref Reference) {
+	e.writeString(string(ref))
 }
 
 type List struct {
