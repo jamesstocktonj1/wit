@@ -7,6 +7,11 @@ type Interface struct {
 }
 
 func (e *Encoder) encodeInterface(i Interface) {
+	if len(i.TypeDefs) == 0 && len(i.Functions) == 0 {
+		e.writeString("interface " + i.Name + " {}")
+		return
+	}
+
 	e.writeString("interface " + i.Name + " {")
 	e.writeReturn()
 	e.openBlock()
@@ -20,5 +25,4 @@ func (e *Encoder) encodeInterface(i Interface) {
 	}
 	e.closeBlock()
 	e.writeString("}")
-	e.writeReturn()
 }
