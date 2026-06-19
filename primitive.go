@@ -114,7 +114,7 @@ func (e *Encoder) encodeTuple(t Tuple) {
 	e.writeString("tuple<")
 	for i, f := range t.Fields {
 		e.encodeType(f)
-		if i < len(t.Fields)-2 {
+		if i < len(t.Fields)-1 {
 			e.writeString(", ")
 		}
 	}
@@ -135,7 +135,7 @@ func (e *Encoder) encodeVariant(v Variant) {
 	for i, c := range v.Cases {
 		e.writeIndent()
 		e.encodeField(c)
-		if i < len(v.Cases)-2 {
+		if i < len(v.Cases)-1 {
 			e.writeString(", ")
 		}
 		e.writeReturn()
@@ -157,12 +157,14 @@ func (e *Encoder) encodeEnum(t Enum) {
 	for i, c := range t.Cases {
 		e.writeIndent()
 		e.writeString(c)
-		if i < len(t.Cases)-2 {
-			e.writeString(", ")
+		if i < len(t.Cases)-1 {
+			e.writeString(",")
 		}
 		e.writeReturn()
 	}
 	e.closeBlock()
+	e.writeIndent()
+	e.writeString("}")
 }
 
 type Flags struct {
@@ -179,12 +181,14 @@ func (e *Encoder) encodeFlags(t Flags) {
 	for i, c := range t.Labels {
 		e.writeIndent()
 		e.writeString(c)
-		if i < len(t.Labels)-2 {
-			e.writeString(", ")
+		if i < len(t.Labels)-1 {
+			e.writeString(",")
 		}
 		e.writeReturn()
 	}
 	e.closeBlock()
+	e.writeIndent()
+	e.writeString("}")
 }
 
 type Alias struct {

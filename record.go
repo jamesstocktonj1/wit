@@ -25,7 +25,6 @@ func (e *Encoder) encodeRecord(r Record) {
 	e.closeBlock()
 	e.writeIndent()
 	e.writeString("}")
-	e.writeReturn()
 }
 
 // Field
