@@ -1,0 +1,14 @@
+package wasi:io@0.2.0;
+
+interface input {
+  read: func(len: u32) -> list<u8>;
+}
+
+interface output {
+  write: func(buf: list<u8>) -> u32;
+}
+
+world streams {
+  import input;
+  export output;
+}

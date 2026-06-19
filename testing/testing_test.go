@@ -25,6 +25,61 @@ var testMatrix = []struct {
 		witStruct: empty(),
 		file:      "empty.wit",
 	},
+	{
+		name:      "list-types",
+		witStruct: listTypes(),
+		file:      "list-types.wit",
+	},
+	{
+		name:      "option-result",
+		witStruct: optionResult(),
+		file:      "option-result.wit",
+	},
+	{
+		name:      "enum-flags",
+		witStruct: enumFlags(),
+		file:      "enum-flags.wit",
+	},
+	{
+		name:      "multi-interface",
+		witStruct: multiInterface(),
+		file:      "multi-interface.wit",
+	},
+	{
+		name:      "multi-world",
+		witStruct: multiWorld(),
+		file:      "multi-world.wit",
+	},
+	{
+		name:      "nested-types",
+		witStruct: nestedTypes(),
+		file:      "nested-types.wit",
+	},
+	{
+		name:      "tuple",
+		witStruct: tupleTypes(),
+		file:      "tuple.wit",
+	},
+	{
+		name:      "alias",
+		witStruct: aliasTypes(),
+		file:      "alias.wit",
+	},
+	{
+		name:      "complex-record",
+		witStruct: complexRecord(),
+		file:      "complex-record.wit",
+	},
+	{
+		name:      "wasi-cli",
+		witStruct: wasiCli(),
+		file:      "wasi-cli.wit",
+	},
+	{
+		name:      "kv-store",
+		witStruct: kvStore(),
+		file:      "kv-store.wit",
+	},
 }
 
 func TestIntegration(t *testing.T) {
