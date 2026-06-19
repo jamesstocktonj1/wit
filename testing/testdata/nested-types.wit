@@ -1,0 +1,11 @@
+package example:nested;
+
+interface deep {
+  flatten: func(matrix: list<list<s32>>) -> list<s32>;
+  lookup: func(key: string) -> option<list<string>>;
+  parse: func(input: string) -> result<option<u64>, string>;
+}
+
+world nested-world {
+  export deep;
+}

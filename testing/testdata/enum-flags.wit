@@ -1,0 +1,20 @@
+package example:enum-flags;
+
+interface permissions {
+  flags access {
+    read,
+    write,
+    execute
+  }
+  enum direction {
+    north,
+    south,
+    east,
+    west
+  }
+  can-access: func(dir: direction) -> bool;
+}
+
+world permissions-world {
+  export permissions;
+}

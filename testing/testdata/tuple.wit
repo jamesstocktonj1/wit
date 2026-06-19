@@ -1,0 +1,13 @@
+package example:tuples;
+
+interface coords {
+  record bounds {
+    min: tuple<f64, f64>,
+    max: tuple<f64, f64>
+  }
+  midpoint: func(b: bounds) -> tuple<f64, f64>;
+}
+
+world coords-world {
+  export coords;
+}

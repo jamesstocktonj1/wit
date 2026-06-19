@@ -13,8 +13,11 @@ type Param struct {
 
 func (e *Encoder) encodeFunction(f Function) {
 	e.writeString(f.Name + ": func(")
-	for _, p := range f.Params {
+	for i, p := range f.Params {
 		e.encodeParam(p)
+		if i < len(f.Params)-1 {
+			e.writeString(", ")
+		}
 	}
 	if f.Results == nil {
 		e.writeString(");")
@@ -23,7 +26,6 @@ func (e *Encoder) encodeFunction(f Function) {
 		e.encodeParam(*f.Results)
 		e.writeString(";")
 	}
-	e.writeReturn()
 }
 
 func (e *Encoder) encodeParam(p Param) {

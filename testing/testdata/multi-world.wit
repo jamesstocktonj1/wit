@@ -1,0 +1,13 @@
+package example:worlds;
+
+interface logger {
+  log: func(msg: string);
+}
+
+world server {
+  export logger;
+}
+
+world client {
+  import logger;
+}

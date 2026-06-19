@@ -1,0 +1,11 @@
+package example:alias;
+
+interface types {
+  type name = string;
+  type age = u32;
+  type names = list<name>;
+}
+
+world alias-world {
+  export types;
+}

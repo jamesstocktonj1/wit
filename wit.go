@@ -7,14 +7,25 @@ type Wit struct {
 }
 
 func (e *Encoder) encodeWit(w Wit) {
+	first := true
 	if w.Package != nil {
 		e.encodePackage(*w.Package)
-		e.writeReturn()
+		first = false
 	}
 	for _, i := range w.Interfaces {
+		if !first {
+			e.writeReturn()
+			e.writeReturn()
+		}
 		e.encodeInterface(i)
+		first = false
 	}
-	for _, w := range w.Worlds {
-		e.encodeWorld(w)
+	for _, world := range w.Worlds {
+		if !first {
+			e.writeReturn()
+			e.writeReturn()
+		}
+		e.encodeWorld(world)
+		first = false
 	}
 }

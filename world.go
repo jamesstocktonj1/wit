@@ -7,6 +7,10 @@ type World struct {
 }
 
 func (e *Encoder) encodeWorld(w World) {
+	if len(w.Imports) == 0 && len(w.Exports) == 0 {
+		e.writeString("world " + w.Name + " {}")
+		return
+	}
 	e.writeString("world " + w.Name + " {")
 	e.writeReturn()
 	e.openBlock()
@@ -22,5 +26,4 @@ func (e *Encoder) encodeWorld(w World) {
 	}
 	e.closeBlock()
 	e.writeString("}")
-	e.writeReturn()
 }

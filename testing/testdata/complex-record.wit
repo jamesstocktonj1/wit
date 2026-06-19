@@ -1,0 +1,14 @@
+package example:complex-record;
+
+interface data {
+  record response {
+    status: u32,
+    body: option<list<u8>>,
+    error: option<string>
+  }
+  fetch: func(url: string) -> response;
+}
+
+world data-world {
+  export data;
+}

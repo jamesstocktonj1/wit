@@ -1,0 +1,14 @@
+package example:lists;
+
+interface collection {
+  record point {
+    x: f32,
+    y: f32
+  }
+  sum: func(values: list<s32>) -> s32;
+  join: func(parts: list<string>) -> string;
+}
+
+world collection-world {
+  export collection;
+}

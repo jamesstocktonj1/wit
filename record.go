@@ -14,17 +14,17 @@ func (e *Encoder) encodeRecord(r Record) {
 	e.writeString("record " + r.Name + " {")
 	e.writeReturn()
 	e.openBlock()
-	for _, f := range r.Fields {
+	for i, f := range r.Fields {
 		e.writeIndent()
-		e.writeString(f.Name)
-		e.writeString(": ")
-		e.encodeType(f.Kind)
+		e.encodeField(f)
+		if i < len(r.Fields)-1 {
+			e.writeString(",")
+		}
 		e.writeReturn()
 	}
 	e.closeBlock()
 	e.writeIndent()
 	e.writeString("}")
-	e.writeReturn()
 }
 
 // Field
