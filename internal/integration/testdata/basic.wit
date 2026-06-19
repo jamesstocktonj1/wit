@@ -1,0 +1,13 @@
+package wasi:test;
+
+interface greeting {
+  record message {
+    name: string,
+    message: string
+  }
+  greet: func(name: string) -> message;
+}
+
+world greeter {
+  export greeting;
+}
