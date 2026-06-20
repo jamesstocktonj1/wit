@@ -749,7 +749,7 @@ func docs() wit.Wit {
 			{
 				Name:    "data-world",
 				Exports: []string{"data"},
-				Docs:    wit.Docs{"data-world exports the data interface"},
+				Docs:    wit.Docs{Content: "data-world exports the data interface"},
 			},
 		},
 	}
