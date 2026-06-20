@@ -1,7 +1,12 @@
 package wit
 
-func NewFunction(name string, result *Param, params ...Param) *Function {
-	return &Function{Name: name, Params: params, Results: result}
+func NewFunction(name string, params ...Param) *Function {
+	return &Function{Name: name, Params: params}
+}
+
+func (f *Function) WithResult(result Param) *Function {
+	f.Result = &result
+	return f
 }
 
 func (f *Function) WithDocs(content string) *Function {
@@ -10,10 +15,10 @@ func (f *Function) WithDocs(content string) *Function {
 }
 
 type Function struct {
-	Name    string
-	Params  []Param
-	Results *Param
-	Docs    Docs
+	Name   string
+	Params []Param
+	Result *Param
+	Docs   Docs
 }
 
 func NewParam(name string, kind Type) Param {
@@ -35,11 +40,11 @@ func (e *Encoder) encodeFunction(f Function) {
 			e.writeString(", ")
 		}
 	}
-	if f.Results == nil {
+	if f.Result == nil {
 		e.writeString(");")
 	} else {
 		e.writeString(") -> ")
-		e.encodeParam(*f.Results)
+		e.encodeParam(*f.Result)
 		e.writeString(";")
 	}
 }
