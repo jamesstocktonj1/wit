@@ -1,12 +1,14 @@
 package wit
 
 type Wit struct {
+	Docs       Docs
 	Package    *Package
 	Interfaces []Interface
 	Worlds     []World
 }
 
 func (e *Encoder) encodeWit(w Wit) {
+	e.encodeDocs(w.Docs)
 	first := true
 	if w.Package != nil {
 		e.encodePackage(*w.Package)

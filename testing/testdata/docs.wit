@@ -1,0 +1,33 @@
+package example:docs;
+
+/// data is the main interface in the package `example:docs`
+/// this is also a multi-line doc
+interface data {
+  /// method is an enum for the request method
+  enum method {
+    /// GET - get request
+    GET,
+    /// POST - post request
+    POST,
+    /// PUT - put request
+    PUT,
+    /// DELETE - delete request
+    DELETE
+  }
+  /// response is the response structure
+  record response {
+    /// status is the http status code
+    status: u32,
+    /// body is an optional byte array
+    body: option<list<u8>>,
+    /// error is an optional error message
+    error: option<string>
+  }
+  /// fetch calls the url and responds with the response record
+  fetch: func(url: string, method: method) -> response;
+}
+
+/// data-world exports the data interface
+world data-world {
+  export data;
+}

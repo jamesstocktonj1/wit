@@ -1,0 +1,14 @@
+package example:variant;
+
+interface shapes {
+  variant shape {
+    circle(f32),
+    rectangle(tuple<f32, f32>),
+    point
+  }
+  area: func(s: shape) -> f32;
+}
+
+world shapes-world {
+  export shapes;
+}
