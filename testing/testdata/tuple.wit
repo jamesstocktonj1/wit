@@ -5,6 +5,7 @@ interface coords {
     min: tuple<f64, f64>,
     max: tuple<f64, f64>
   }
+
   midpoint: func(b: bounds) -> tuple<f64, f64>;
 }
 

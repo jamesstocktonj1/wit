@@ -5,17 +5,21 @@ interface stdin {
     code: u32,
     message: string
   }
+
   read: func(len: u64) -> result<list<u8>, stream-error>;
 }
 
 interface stdout {
   write: func(buf: list<u8>) -> result<u64, string>;
+
   flush: func();
 }
 
 interface environment {
   get-environment: func() -> list<tuple<string, string>>;
+
   get-arguments: func() -> list<string>;
+
   initial-cwd: func() -> option<string>;
 }
 
@@ -24,6 +28,7 @@ interface exit {
     success,
     failure
   }
+
   exit: func(code: exit-code);
 }
 

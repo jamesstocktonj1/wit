@@ -5,7 +5,9 @@ interface collection {
     x: f32,
     y: f32
   }
+
   sum: func(values: list<s32>) -> s32;
+
   join: func(parts: list<string>) -> string;
 }
 
