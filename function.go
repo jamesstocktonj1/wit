@@ -1,15 +1,15 @@
 package wit
 
-func NewFunction(name string, params ...Param) *Function {
-	return &Function{Name: name, Params: params}
+func NewFunction(name string, params ...Param) Function {
+	return Function{Name: name, Params: params}
 }
 
-func (f *Function) WithResult(result Param) *Function {
+func (f Function) WithResult(result Param) Function {
 	f.Result = &result
 	return f
 }
 
-func (f *Function) WithDocs(content string) *Function {
+func (f Function) WithDocs(content string) Function {
 	f.Docs = Docs{Content: content}
 	return f
 }

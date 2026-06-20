@@ -1,20 +1,20 @@
 package wit
 
-func NewWorld(name string) *World {
-	return &World{Name: name}
+func NewWorld(name string) World {
+	return World{Name: name}
 }
 
-func (w *World) WithImports(imports ...string) *World {
+func (w World) WithImports(imports ...string) World {
 	w.Imports = append(w.Imports, imports...)
 	return w
 }
 
-func (w *World) WithExports(exports ...string) *World {
+func (w World) WithExports(exports ...string) World {
 	w.Exports = append(w.Exports, exports...)
 	return w
 }
 
-func (w *World) WithDocs(content string) *World {
+func (w World) WithDocs(content string) World {
 	w.Docs = Docs{Content: content}
 	return w
 }

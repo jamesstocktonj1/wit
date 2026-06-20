@@ -1,20 +1,20 @@
 package wit
 
-func NewWit() *Wit {
-	return &Wit{}
+func NewWit() Wit {
+	return Wit{}
 }
 
-func (w *Wit) WithPackage(p *Package) *Wit {
+func (w Wit) WithPackage(p *Package) Wit {
 	w.Package = p
 	return w
 }
 
-func (w *Wit) WithInterface(interfaces ...Interface) *Wit {
+func (w Wit) WithInterface(interfaces ...Interface) Wit {
 	w.Interfaces = append(w.Interfaces, interfaces...)
 	return w
 }
 
-func (w *Wit) WithWorld(worlds ...World) *Wit {
+func (w Wit) WithWorld(worlds ...World) Wit {
 	w.Worlds = append(w.Worlds, worlds...)
 	return w
 }
