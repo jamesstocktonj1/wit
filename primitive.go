@@ -9,13 +9,9 @@ type Type interface {
 func (e *Encoder) encodeType(t Type) {
 	switch tp := t.(type) {
 	case *List:
-		e.writeString("list<")
-		e.encodeType(tp.Elem)
-		e.writeString(">")
+		e.encodeList(*tp)
 	case *Option:
-		e.writeString("option<")
-		e.encodeType(tp.Inner)
-		e.writeString(">")
+		e.encodeOption(*tp)
 	case *Result:
 		e.encodeResult(*tp)
 	case *Tuple:
