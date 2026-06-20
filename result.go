@@ -12,7 +12,7 @@ type Result struct {
 func (r Result) witType() {}
 
 // TODO: allow double nil / err nil cases
-func (e *Encoder) encodeResult(r Result) {
+func (e *encoder) encodeResult(r Result) {
 	e.writeString("result<")
 	e.encodeType(r.Ok)
 	e.writeString(", ")

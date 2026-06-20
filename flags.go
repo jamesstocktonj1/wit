@@ -17,7 +17,7 @@ type Flags struct {
 
 func (e Flags) witType() {}
 
-func (e *Encoder) encodeFlags(t Flags) {
+func (e *encoder) encodeFlags(t Flags) {
 	e.encodeDocs(t.Docs)
 	e.writeIndent()
 	e.writeString("flags " + t.Name + " {")

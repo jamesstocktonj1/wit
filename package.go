@@ -37,6 +37,6 @@ func (p Package) String() string {
 	return pkg
 }
 
-func (e *Encoder) encodePackage(p Package) {
+func (e *encoder) encodePackage(p Package) {
 	e.writeString("package " + p.String() + ";")
 }

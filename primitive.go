@@ -6,7 +6,7 @@ type Type interface {
 	witType()
 }
 
-func (e *Encoder) encodeType(t Type) {
+func (e *encoder) encodeType(t Type) {
 	switch tp := t.(type) {
 	case *List:
 		e.encodeList(*tp)

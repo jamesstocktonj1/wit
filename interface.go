@@ -21,7 +21,7 @@ type Interface struct {
 	Docs      Docs
 }
 
-func (e *Encoder) encodeInterface(i Interface) {
+func (e *encoder) encodeInterface(i Interface) {
 	e.encodeDocs(i.Docs)
 	if len(i.TypeDefs) == 0 && len(i.Functions) == 0 {
 		e.writeString("interface " + i.Name + " {}")

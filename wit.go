@@ -26,7 +26,7 @@ type Wit struct {
 	Worlds     []World
 }
 
-func (e *Encoder) encodeWit(w Wit) {
+func (e *encoder) encodeWit(w Wit) {
 	e.encodeDocs(w.Docs)
 	first := true
 	if w.Package != nil {

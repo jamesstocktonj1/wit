@@ -20,7 +20,7 @@ type Alias struct {
 
 func (a Alias) witType() {}
 
-func (e *Encoder) encodeAlias(a Alias) {
+func (e *encoder) encodeAlias(a Alias) {
 	e.encodeDocs(a.Docs)
 	e.writeIndent()
 	e.writeString("type " + a.Name + " = ")

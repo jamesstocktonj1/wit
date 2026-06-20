@@ -10,7 +10,7 @@ type Option struct {
 
 func (o Option) witType() {}
 
-func (e *Encoder) encodeOption(o Option) {
+func (e *encoder) encodeOption(o Option) {
 	e.writeString("option<")
 	e.encodeType(o.Inner)
 	e.writeString(">")

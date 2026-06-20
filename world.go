@@ -26,7 +26,7 @@ type World struct {
 	Docs    Docs
 }
 
-func (e *Encoder) encodeWorld(w World) {
+func (e *encoder) encodeWorld(w World) {
 	e.encodeDocs(w.Docs)
 	if len(w.Imports) == 0 && len(w.Exports) == 0 {
 		e.writeString("world " + w.Name + " {}")

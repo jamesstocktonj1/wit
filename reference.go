@@ -9,6 +9,6 @@ func NewReference(ref string) *Reference {
 	return &r
 }
 
-func (e *Encoder) encodeReference(ref Reference) {
+func (e *encoder) encodeReference(ref Reference) {
 	e.writeString(string(ref))
 }

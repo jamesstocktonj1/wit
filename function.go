@@ -30,7 +30,7 @@ type Param struct {
 	Kind Type
 }
 
-func (e *Encoder) encodeFunction(f Function) {
+func (e *encoder) encodeFunction(f Function) {
 	e.encodeDocs(f.Docs)
 	e.writeIndent()
 	e.writeString(f.Name + ": func(")
@@ -49,7 +49,7 @@ func (e *Encoder) encodeFunction(f Function) {
 	}
 }
 
-func (e *Encoder) encodeParam(p Param) {
+func (e *encoder) encodeParam(p Param) {
 	if p.Name != "" {
 		e.writeString(p.Name + ": ")
 	}

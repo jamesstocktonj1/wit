@@ -10,7 +10,7 @@ type Tuple struct {
 
 func (t Tuple) witType() {}
 
-func (e *Encoder) encodeTuple(t Tuple) {
+func (e *encoder) encodeTuple(t Tuple) {
 	e.writeString("tuple<")
 	for i, f := range t.Fields {
 		e.encodeType(f)

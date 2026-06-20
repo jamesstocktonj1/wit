@@ -17,7 +17,7 @@ type Variant struct {
 
 func (v Variant) witType() {}
 
-func (e *Encoder) encodeVariant(v Variant) {
+func (e *encoder) encodeVariant(v Variant) {
 	e.encodeDocs(v.Docs)
 	e.writeIndent()
 	e.writeString("variant " + v.Name + " {")
@@ -35,7 +35,7 @@ func (e *Encoder) encodeVariant(v Variant) {
 	e.writeString("}")
 }
 
-func (e *Encoder) encodeVariantCase(f Field) {
+func (e *encoder) encodeVariantCase(f Field) {
 	e.encodeDocs(f.Docs)
 	e.writeIndent()
 	e.writeString(f.Name)

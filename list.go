@@ -10,7 +10,7 @@ type List struct {
 
 func (l List) witType() {}
 
-func (e *Encoder) encodeList(l List) {
+func (e *encoder) encodeList(l List) {
 	e.writeString("list<")
 	e.encodeType(l.Elem)
 	e.writeString(">")

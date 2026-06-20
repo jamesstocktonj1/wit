@@ -20,7 +20,7 @@ func (r Record) witType() {}
 
 func (r Record) EncodeWIT() string { return "" }
 
-func (e *Encoder) encodeRecord(r Record) {
+func (e *encoder) encodeRecord(r Record) {
 	e.encodeDocs(r.Docs)
 	e.writeIndent()
 	e.writeString("record " + r.Name + " {")
@@ -54,7 +54,7 @@ type Field struct {
 	Docs Docs
 }
 
-func (e *Encoder) encodeField(f Field) {
+func (e *encoder) encodeField(f Field) {
 	e.encodeDocs(f.Docs)
 	e.writeIndent()
 	e.writeString(f.Name + ": ")

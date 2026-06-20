@@ -31,7 +31,7 @@ type Case struct {
 
 func (e Enum) witType() {}
 
-func (e *Encoder) encodeEnum(t Enum) {
+func (e *encoder) encodeEnum(t Enum) {
 	e.encodeDocs(t.Docs)
 	e.writeIndent()
 	e.writeString("enum " + t.Name + " {")
@@ -49,7 +49,7 @@ func (e *Encoder) encodeEnum(t Enum) {
 	e.writeString("}")
 }
 
-func (e *Encoder) encodeCase(c Case) {
+func (e *encoder) encodeCase(c Case) {
 	e.encodeDocs(c.Docs)
 	e.writeIndent()
 	e.writeString(c.Name)
