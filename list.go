@@ -1,5 +1,9 @@
 package wit
 
+func NewList(elem Type) *List {
+	return &List{Elem: elem}
+}
+
 type List struct {
 	Elem Type
 }

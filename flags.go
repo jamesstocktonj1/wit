@@ -1,5 +1,14 @@
 package wit
 
+func NewFlags(name string, cases ...Case) *Flags {
+	return &Flags{Name: name, Cases: cases}
+}
+
+func (f *Flags) WithDocs(content string) *Flags {
+	f.Docs = Docs{Content: content}
+	return f
+}
+
 type Flags struct {
 	Name  string
 	Cases []Case

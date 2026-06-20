@@ -1,5 +1,17 @@
 package wit
 
+func NewAlias(name string, kind Type) *Alias {
+	return &Alias{
+		Name: name,
+		Kind: kind,
+	}
+}
+
+func (a *Alias) WithDocs(content string) *Alias {
+	a.Docs = Docs{Content: content}
+	return a
+}
+
 type Alias struct {
 	Name string
 	Kind Type

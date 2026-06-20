@@ -4,6 +4,20 @@ import (
 	"fmt"
 )
 
+func NewPackage(namespace, pkg string) *Package {
+	return &Package{Namespace: namespace, Package: pkg}
+}
+
+func (p *Package) WithVersion(version string) *Package {
+	p.Version = version
+	return p
+}
+
+func (p *Package) WithInterface(interfaces ...string) *Package {
+	p.Interface = append(p.Interface, interfaces...)
+	return p
+}
+
 // Package
 //
 // package documentation:example;

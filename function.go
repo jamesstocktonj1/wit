@@ -1,10 +1,23 @@
 package wit
 
+func NewFunction(name string, result *Param, params ...Param) *Function {
+	return &Function{Name: name, Params: params, Results: result}
+}
+
+func (f *Function) WithDocs(content string) *Function {
+	f.Docs = Docs{Content: content}
+	return f
+}
+
 type Function struct {
 	Name    string
 	Params  []Param
 	Results *Param
 	Docs    Docs
+}
+
+func NewParam(name string, kind Type) Param {
+	return Param{Name: name, Kind: kind}
 }
 
 type Param struct {

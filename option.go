@@ -1,5 +1,9 @@
 package wit
 
+func NewOption(inner Type) *Option {
+	return &Option{Inner: inner}
+}
+
 type Option struct {
 	Inner Type
 }

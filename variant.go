@@ -1,5 +1,14 @@
 package wit
 
+func NewVariant(name string, cases ...Field) *Variant {
+	return &Variant{Name: name, Cases: cases}
+}
+
+func (v *Variant) WithDocs(content string) *Variant {
+	v.Docs = Docs{Content: content}
+	return v
+}
+
 type Variant struct {
 	Name  string
 	Cases []Field

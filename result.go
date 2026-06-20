@@ -1,5 +1,9 @@
 package wit
 
+func NewResult(ok, err Type) *Result {
+	return &Result{Ok: ok, Err: err}
+}
+
 type Result struct {
 	Ok  Type
 	Err Type

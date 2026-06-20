@@ -1,9 +1,27 @@
 package wit
 
+func NewEnum(name string, cases ...Case) *Enum {
+	return &Enum{Name: name, Cases: cases}
+}
+
+func (e *Enum) WithDocs(content string) *Enum {
+	e.Docs = Docs{Content: content}
+	return e
+}
+
 type Enum struct {
 	Name  string
 	Cases []Case
 	Docs  Docs
+}
+
+func NewCase(name string) Case {
+	return Case{Name: name}
+}
+
+func (c Case) WithDocs(content string) Case {
+	c.Docs = Docs{Content: content}
+	return c
 }
 
 type Case struct {

@@ -1,5 +1,9 @@
 package wit
 
+func NewTuple(fields ...Type) *Tuple {
+	return &Tuple{Fields: fields}
+}
+
 type Tuple struct {
 	Fields []Type
 }

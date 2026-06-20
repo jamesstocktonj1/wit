@@ -1,5 +1,19 @@
 package wit
 
+func NewInterface(name string, typeDefs ...Type) *Interface {
+	return &Interface{Name: name, TypeDefs: typeDefs}
+}
+
+func (i *Interface) WithFunctions(funcs ...Function) *Interface {
+	i.Functions = append(i.Functions, funcs...)
+	return i
+}
+
+func (i *Interface) WithDocs(content string) *Interface {
+	i.Docs = Docs{Content: content}
+	return i
+}
+
 type Interface struct {
 	Name      string
 	TypeDefs  []Type
