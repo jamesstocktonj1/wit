@@ -4,6 +4,20 @@ import (
 	"fmt"
 )
 
+func NewPackage(namespace, pkg string) *Package {
+	return &Package{Namespace: namespace, Package: pkg}
+}
+
+func (p *Package) WithVersion(version string) *Package {
+	p.Version = version
+	return p
+}
+
+func (p *Package) WithInterface(interfaces ...string) *Package {
+	p.Interface = append(p.Interface, interfaces...)
+	return p
+}
+
 // Package
 //
 // package documentation:example;
@@ -23,6 +37,6 @@ func (p Package) String() string {
 	return pkg
 }
 
-func (e *Encoder) encodePackage(p Package) {
+func (e *encoder) encodePackage(p Package) {
 	e.writeString("package " + p.String() + ";")
 }

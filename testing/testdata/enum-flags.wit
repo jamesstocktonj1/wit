@@ -6,12 +6,14 @@ interface permissions {
     write,
     execute
   }
+
   enum direction {
     north,
     south,
     east,
     west
   }
+
   can-access: func(dir: direction) -> bool;
 }
 

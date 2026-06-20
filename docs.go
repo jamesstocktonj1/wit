@@ -6,7 +6,7 @@ type Docs struct {
 	Content string
 }
 
-func (e *Encoder) encodeDocs(d Docs) {
+func (e *encoder) encodeDocs(d Docs) {
 	if d.Content == "" {
 		return
 	}

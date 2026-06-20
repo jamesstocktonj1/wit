@@ -6,6 +6,7 @@ interface data {
     body: option<list<u8>>,
     error: option<string>
   }
+
   fetch: func(url: string) -> response;
 }
 

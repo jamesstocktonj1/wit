@@ -2,6 +2,7 @@ package example:option-result;
 
 interface maybe {
   find: func(key: string) -> option<string>;
+
   divide: func(numerator: f64) -> result<f64, string>;
 }
 

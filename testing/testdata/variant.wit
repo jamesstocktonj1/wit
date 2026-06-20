@@ -6,6 +6,7 @@ interface shapes {
     rectangle(tuple<f32, f32>),
     point
   }
+
   area: func(s: shape) -> f32;
 }
 

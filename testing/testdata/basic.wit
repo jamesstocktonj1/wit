@@ -5,6 +5,7 @@ interface greeting {
     name: string,
     message: string
   }
+
   greet: func(name: string) -> message;
 }
 
