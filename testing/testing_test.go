@@ -80,6 +80,16 @@ var testMatrix = []struct {
 		witStruct: kvStore(),
 		file:      "kv-store.wit",
 	},
+	{
+		name:      "docs",
+		witStruct: docs(),
+		file:      "docs.wit",
+	},
+	{
+		name:      "variant",
+		witStruct: variantTypes(),
+		file:      "variant.wit",
+	},
 }
 
 func TestIntegration(t *testing.T) {

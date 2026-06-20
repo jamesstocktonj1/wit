@@ -124,39 +124,61 @@ func (e *Encoder) encodeTuple(t Tuple) {
 type Variant struct {
 	Name  string
 	Cases []Field
+	Docs  Docs
 }
 
 func (v Variant) witType() {}
 
 func (e *Encoder) encodeVariant(v Variant) {
+	e.encodeDocs(v.Docs)
+	e.writeIndent()
 	e.writeString("variant " + v.Name + " {")
 	e.writeReturn()
 	e.openBlock()
 	for i, c := range v.Cases {
-		e.writeIndent()
-		e.encodeField(c)
+		e.encodeVariantCase(c)
 		if i < len(v.Cases)-1 {
-			e.writeString(", ")
+			e.writeString(",")
 		}
 		e.writeReturn()
 	}
 	e.closeBlock()
+	e.writeIndent()
+	e.writeString("}")
+}
+
+func (e *Encoder) encodeVariantCase(f Field) {
+	e.encodeDocs(f.Docs)
+	e.writeIndent()
+	e.writeString(f.Name)
+	if f.Kind != nil {
+		e.writeString("(")
+		e.encodeType(f.Kind)
+		e.writeString(")")
+	}
 }
 
 type Enum struct {
 	Name  string
-	Cases []string
+	Cases []Case
+	Docs  Docs
+}
+
+type Case struct {
+	Name string
+	Docs Docs
 }
 
 func (e Enum) witType() {}
 
 func (e *Encoder) encodeEnum(t Enum) {
+	e.encodeDocs(t.Docs)
+	e.writeIndent()
 	e.writeString("enum " + t.Name + " {")
 	e.writeReturn()
 	e.openBlock()
 	for i, c := range t.Cases {
-		e.writeIndent()
-		e.writeString(c)
+		e.encodeCase(c)
 		if i < len(t.Cases)-1 {
 			e.writeString(",")
 		}
@@ -167,21 +189,29 @@ func (e *Encoder) encodeEnum(t Enum) {
 	e.writeString("}")
 }
 
+func (e *Encoder) encodeCase(c Case) {
+	e.encodeDocs(c.Docs)
+	e.writeIndent()
+	e.writeString(c.Name)
+}
+
 type Flags struct {
-	Name   string
-	Labels []string
+	Name  string
+	Cases []Case
+	Docs  Docs
 }
 
 func (e Flags) witType() {}
 
 func (e *Encoder) encodeFlags(t Flags) {
+	e.encodeDocs(t.Docs)
+	e.writeIndent()
 	e.writeString("flags " + t.Name + " {")
 	e.writeReturn()
 	e.openBlock()
-	for i, c := range t.Labels {
-		e.writeIndent()
-		e.writeString(c)
-		if i < len(t.Labels)-1 {
+	for i, c := range t.Cases {
+		e.encodeCase(c)
+		if i < len(t.Cases)-1 {
 			e.writeString(",")
 		}
 		e.writeReturn()
@@ -194,11 +224,14 @@ func (e *Encoder) encodeFlags(t Flags) {
 type Alias struct {
 	Name string
 	Kind Type
+	Docs Docs
 }
 
 func (a Alias) witType() {}
 
 func (e *Encoder) encodeAlias(a Alias) {
+	e.encodeDocs(a.Docs)
+	e.writeIndent()
 	e.writeString("type " + a.Name + " = ")
 	e.encodeType(a.Kind)
 	e.writeString(";")

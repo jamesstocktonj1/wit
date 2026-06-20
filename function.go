@@ -4,6 +4,7 @@ type Function struct {
 	Name    string
 	Params  []Param
 	Results *Param
+	Docs    Docs
 }
 
 type Param struct {
@@ -12,6 +13,8 @@ type Param struct {
 }
 
 func (e *Encoder) encodeFunction(f Function) {
+	e.encodeDocs(f.Docs)
+	e.writeIndent()
 	e.writeString(f.Name + ": func(")
 	for i, p := range f.Params {
 		e.encodeParam(p)

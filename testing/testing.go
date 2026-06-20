@@ -154,12 +154,17 @@ func enumFlags() wit.Wit {
 				Name: "permissions",
 				TypeDefs: []wit.Type{
 					&wit.Flags{
-						Name:   "access",
-						Labels: []string{"read", "write", "execute"},
+						Name:  "access",
+						Cases: []wit.Case{{Name: "read"}, {Name: "write"}, {Name: "execute"}},
 					},
 					&wit.Enum{
-						Name:  "direction",
-						Cases: []string{"north", "south", "east", "west"},
+						Name: "direction",
+						Cases: []wit.Case{
+							{Name: "north"},
+							{Name: "south"},
+							{Name: "east"},
+							{Name: "west"},
+						},
 					},
 				},
 				Functions: []wit.Function{
@@ -512,8 +517,11 @@ func wasiCli() wit.Wit {
 				Name: "exit",
 				TypeDefs: []wit.Type{
 					&wit.Enum{
-						Name:  "exit-code",
-						Cases: []string{"success", "failure"},
+						Name: "exit-code",
+						Cases: []wit.Case{
+							{Name: "success"},
+							{Name: "failure"},
+						},
 					},
 				},
 				Functions: []wit.Function{
@@ -557,12 +565,16 @@ func kvStore() wit.Wit {
 					&wit.Alias{Name: "key", Kind: wit.NewPrimitive(wit.String)},
 					&wit.Alias{Name: "value", Kind: &wit.List{Elem: wit.NewPrimitive(wit.Unsigned8)}},
 					&wit.Flags{
-						Name:   "consistency",
-						Labels: []string{"strong", "eventual"},
+						Name:  "consistency",
+						Cases: []wit.Case{{Name: "strong"}, {Name: "eventual"}},
 					},
 					&wit.Enum{
-						Name:  "error-kind",
-						Cases: []string{"not-found", "permission-denied", "internal"},
+						Name: "error-kind",
+						Cases: []wit.Case{
+							{Name: "not-found"},
+							{Name: "permission-denied"},
+							{Name: "internal"},
+						},
 					},
 					&wit.Record{
 						Name: "error",
@@ -659,6 +671,123 @@ func empty() wit.Wit {
 		Worlds: []wit.World{
 			{
 				Name: "empty",
+			},
+		},
+	}
+}
+
+func docs() wit.Wit {
+	responseRef := wit.Reference("response")
+	return wit.Wit{
+		Package: &wit.Package{
+			Namespace: "example",
+			Package:   "docs",
+		},
+		Interfaces: []wit.Interface{
+			{
+				Name: "data",
+				TypeDefs: []wit.Type{
+					&wit.Enum{
+						Name: "method",
+						Cases: []wit.Case{
+							{
+								Name: "GET",
+								Docs: wit.Docs{Content: "GET - get request"},
+							},
+							{
+								Name: "POST",
+								Docs: wit.Docs{Content: "POST - post request"},
+							},
+							{
+								Name: "PUT",
+								Docs: wit.Docs{Content: "PUT - put request"},
+							},
+							{
+								Name: "DELETE",
+								Docs: wit.Docs{Content: "DELETE - delete request"},
+							},
+						},
+						Docs: wit.Docs{Content: "method is an enum for the request method"},
+					},
+					&wit.Record{
+						Name: "response",
+						Docs: wit.Docs{Content: "response is the response structure"},
+						Fields: []wit.Field{
+							{
+								Name: "status",
+								Kind: wit.NewPrimitive(wit.Unsigned32),
+								Docs: wit.Docs{Content: "status is the http status code"},
+							},
+							{
+								Name: "body",
+								Kind: &wit.Option{Inner: &wit.List{Elem: wit.NewPrimitive(wit.Unsigned8)}},
+								Docs: wit.Docs{Content: "body is an optional byte array"},
+							},
+							{
+								Name: "error",
+								Kind: &wit.Option{Inner: wit.NewPrimitive(wit.String)},
+								Docs: wit.Docs{Content: "error is an optional error message"},
+							},
+						},
+					},
+				},
+				Functions: []wit.Function{
+					{
+						Name: "fetch",
+						Params: []wit.Param{
+							{Name: "url", Kind: wit.NewPrimitive(wit.String)},
+							{Name: "method", Kind: wit.NewReference("method")},
+						},
+						Results: &wit.Param{Kind: &responseRef},
+						Docs:    wit.Docs{Content: "fetch calls the url and responds with the response record"},
+					},
+				},
+				Docs: wit.Docs{Content: "data is the main interface in the package `example:docs`\nthis is also a multi-line doc"},
+			},
+		},
+		Worlds: []wit.World{
+			{
+				Name:    "data-world",
+				Exports: []string{"data"},
+				Docs:    wit.Docs{"data-world exports the data interface"},
+			},
+		},
+	}
+}
+
+func variantTypes() wit.Wit {
+	shapeRef := wit.Reference("shape")
+	return wit.Wit{
+		Package: &wit.Package{
+			Namespace: "example",
+			Package:   "variant",
+		},
+		Interfaces: []wit.Interface{
+			{
+				Name: "shapes",
+				TypeDefs: []wit.Type{
+					&wit.Variant{
+						Name: "shape",
+						Cases: []wit.Field{
+							{Name: "circle", Kind: wit.NewPrimitive(wit.Float32)},
+							{Name: "rectangle", Kind: &wit.Tuple{Fields: []wit.Type{wit.NewPrimitive(wit.Float32), wit.NewPrimitive(wit.Float32)}}},
+							{Name: "point"},
+						},
+					},
+				},
+				Functions: []wit.Function{
+					{
+						Name:    "area",
+						Params:  []wit.Param{{Name: "s", Kind: &shapeRef}},
+						Results: &wit.Param{Kind: wit.NewPrimitive(wit.Float32)},
+					},
+				},
+			},
+		},
+		Worlds: []wit.World{
+			{
+				Name:    "shapes-world",
+				Exports: []string{"shapes"},
 			},
 		},
 	}
