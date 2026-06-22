@@ -9,11 +9,11 @@ func basic() wit.Wit {
 		WithInterface(
 			wit.NewInterface("greeting",
 				wit.NewRecord("message",
-					wit.NewField("name", wit.NewPrimitive(wit.String)),
-					wit.NewField("message", wit.NewPrimitive(wit.String)),
+					wit.NewField("name", wit.String),
+					wit.NewField("message", wit.String),
 				),
 			).WithFunctions(
-				wit.NewFunction("greet", wit.NewParam("name", wit.NewPrimitive(wit.String))).
+				wit.NewFunction("greet", wit.NewParam("name", wit.String)).
 					WithResult(wit.NewParam("", ref)),
 			),
 		).
@@ -28,14 +28,14 @@ func listTypes() wit.Wit {
 		WithInterface(
 			wit.NewInterface("collection",
 				wit.NewRecord("point",
-					wit.NewField("x", wit.NewPrimitive(wit.Float32)),
-					wit.NewField("y", wit.NewPrimitive(wit.Float32)),
+					wit.NewField("x", wit.Float32),
+					wit.NewField("y", wit.Float32),
 				),
 			).WithFunctions(
-				wit.NewFunction("sum", wit.NewParam("values", wit.NewList(wit.NewPrimitive(wit.Signed32)))).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.Signed32))),
-				wit.NewFunction("join", wit.NewParam("parts", wit.NewList(wit.NewPrimitive(wit.String)))).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.String))),
+				wit.NewFunction("sum", wit.NewParam("values", wit.NewList(wit.Signed32))).
+					WithResult(wit.NewParam("", wit.Signed32)),
+				wit.NewFunction("join", wit.NewParam("parts", wit.NewList(wit.String))).
+					WithResult(wit.NewParam("", wit.String)),
 			),
 		).
 		WithWorld(
@@ -48,10 +48,10 @@ func optionResult() wit.Wit {
 		WithPackage(wit.NewPackage("example", "option-result")).
 		WithInterface(
 			wit.NewInterface("maybe").WithFunctions(
-				wit.NewFunction("find", wit.NewParam("key", wit.NewPrimitive(wit.String))).
-					WithResult(wit.NewParam("", wit.NewOption(wit.NewPrimitive(wit.String)))),
-				wit.NewFunction("divide", wit.NewParam("numerator", wit.NewPrimitive(wit.Float64))).
-					WithResult(wit.NewParam("", wit.NewResult(wit.NewPrimitive(wit.Float64), wit.NewPrimitive(wit.String)))),
+				wit.NewFunction("find", wit.NewParam("key", wit.String)).
+					WithResult(wit.NewParam("", wit.NewOption(wit.String))),
+				wit.NewFunction("divide", wit.NewParam("numerator", wit.Float64)).
+					WithResult(wit.NewParam("", wit.NewResult(wit.Float64, wit.String))),
 			),
 		).
 		WithWorld(
@@ -77,7 +77,7 @@ func enumFlags() wit.Wit {
 				),
 			).WithFunctions(
 				wit.NewFunction("can-access", wit.NewParam("dir", wit.NewReference("direction"))).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.Bool))),
+					WithResult(wit.NewParam("", wit.Bool)),
 			),
 		).
 		WithWorld(
@@ -90,12 +90,12 @@ func multiInterface() wit.Wit {
 		WithPackage(wit.NewPackage("wasi", "io").WithVersion("0.2.0")).
 		WithInterface(
 			wit.NewInterface("input").WithFunctions(
-				wit.NewFunction("read", wit.NewParam("len", wit.NewPrimitive(wit.Unsigned32))).
-					WithResult(wit.NewParam("", wit.NewList(wit.NewPrimitive(wit.Unsigned8)))),
+				wit.NewFunction("read", wit.NewParam("len", wit.Unsigned32)).
+					WithResult(wit.NewParam("", wit.NewList(wit.Unsigned8))),
 			),
 			wit.NewInterface("output").WithFunctions(
-				wit.NewFunction("write", wit.NewParam("buf", wit.NewList(wit.NewPrimitive(wit.Unsigned8)))).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.Unsigned32))),
+				wit.NewFunction("write", wit.NewParam("buf", wit.NewList(wit.Unsigned8))).
+					WithResult(wit.NewParam("", wit.Unsigned32)),
 			),
 		).
 		WithWorld(
@@ -108,7 +108,7 @@ func multiWorld() wit.Wit {
 		WithPackage(wit.NewPackage("example", "worlds")).
 		WithInterface(
 			wit.NewInterface("logger").WithFunctions(
-				wit.NewFunction("log", wit.NewParam("msg", wit.NewPrimitive(wit.String))),
+				wit.NewFunction("log", wit.NewParam("msg", wit.String)),
 			),
 		).
 		WithWorld(
@@ -122,14 +122,14 @@ func nestedTypes() wit.Wit {
 		WithPackage(wit.NewPackage("example", "nested")).
 		WithInterface(
 			wit.NewInterface("deep").WithFunctions(
-				wit.NewFunction("flatten", wit.NewParam("matrix", wit.NewList(wit.NewList(wit.NewPrimitive(wit.Signed32))))).
-					WithResult(wit.NewParam("", wit.NewList(wit.NewPrimitive(wit.Signed32)))),
-				wit.NewFunction("lookup", wit.NewParam("key", wit.NewPrimitive(wit.String))).
-					WithResult(wit.NewParam("", wit.NewOption(wit.NewList(wit.NewPrimitive(wit.String))))),
-				wit.NewFunction("parse", wit.NewParam("input", wit.NewPrimitive(wit.String))).
+				wit.NewFunction("flatten", wit.NewParam("matrix", wit.NewList(wit.NewList(wit.Signed32)))).
+					WithResult(wit.NewParam("", wit.NewList(wit.Signed32))),
+				wit.NewFunction("lookup", wit.NewParam("key", wit.String)).
+					WithResult(wit.NewParam("", wit.NewOption(wit.NewList(wit.String)))),
+				wit.NewFunction("parse", wit.NewParam("input", wit.String)).
 					WithResult(wit.NewParam("", wit.NewResult(
-						wit.NewOption(wit.NewPrimitive(wit.Unsigned64)),
-						wit.NewPrimitive(wit.String),
+						wit.NewOption(wit.Unsigned64),
+						wit.String,
 					))),
 			),
 		).
@@ -140,7 +140,7 @@ func nestedTypes() wit.Wit {
 
 func tupleTypes() wit.Wit {
 	boundsRef := wit.NewReference("bounds")
-	pair := wit.NewTuple(wit.NewPrimitive(wit.Float64), wit.NewPrimitive(wit.Float64))
+	pair := wit.NewTuple(wit.Float64, wit.Float64)
 	return wit.NewWit().
 		WithPackage(wit.NewPackage("example", "tuples")).
 		WithInterface(
@@ -164,8 +164,8 @@ func aliasTypes() wit.Wit {
 		WithPackage(wit.NewPackage("example", "alias")).
 		WithInterface(
 			wit.NewInterface("types",
-				wit.NewAlias("name", wit.NewPrimitive(wit.String)),
-				wit.NewAlias("age", wit.NewPrimitive(wit.Unsigned32)),
+				wit.NewAlias("name", wit.String),
+				wit.NewAlias("age", wit.Unsigned32),
 				wit.NewAlias("names", wit.NewList(wit.NewReference("name"))),
 			),
 		).
@@ -181,12 +181,12 @@ func complexRecord() wit.Wit {
 		WithInterface(
 			wit.NewInterface("data",
 				wit.NewRecord("response",
-					wit.NewField("status", wit.NewPrimitive(wit.Unsigned32)),
-					wit.NewField("body", wit.NewOption(wit.NewList(wit.NewPrimitive(wit.Unsigned8)))),
-					wit.NewField("error", wit.NewOption(wit.NewPrimitive(wit.String))),
+					wit.NewField("status", wit.Unsigned32),
+					wit.NewField("body", wit.NewOption(wit.NewList(wit.Unsigned8))),
+					wit.NewField("error", wit.NewOption(wit.String)),
 				),
 			).WithFunctions(
-				wit.NewFunction("fetch", wit.NewParam("url", wit.NewPrimitive(wit.String))).
+				wit.NewFunction("fetch", wit.NewParam("url", wit.String)).
 					WithResult(wit.NewParam("", responseRef)),
 			),
 		).
@@ -203,34 +203,34 @@ func wasiCli() wit.Wit {
 		WithInterface(
 			wit.NewInterface("stdin",
 				wit.NewRecord("stream-error",
-					wit.NewField("code", wit.NewPrimitive(wit.Unsigned32)),
-					wit.NewField("message", wit.NewPrimitive(wit.String)),
+					wit.NewField("code", wit.Unsigned32),
+					wit.NewField("message", wit.String),
 				),
 			).WithFunctions(
-				wit.NewFunction("read", wit.NewParam("len", wit.NewPrimitive(wit.Unsigned64))).
+				wit.NewFunction("read", wit.NewParam("len", wit.Unsigned64)).
 					WithResult(wit.NewParam("", wit.NewResult(
-						wit.NewList(wit.NewPrimitive(wit.Unsigned8)),
+						wit.NewList(wit.Unsigned8),
 						streamErrRef,
 					))),
 			),
 			wit.NewInterface("stdout").WithFunctions(
-				wit.NewFunction("write", wit.NewParam("buf", wit.NewList(wit.NewPrimitive(wit.Unsigned8)))).
+				wit.NewFunction("write", wit.NewParam("buf", wit.NewList(wit.Unsigned8))).
 					WithResult(wit.NewParam("", wit.NewResult(
-						wit.NewPrimitive(wit.Unsigned64),
-						wit.NewPrimitive(wit.String),
+						wit.Unsigned64,
+						wit.String,
 					))),
 				wit.NewFunction("flush"),
 			),
 			wit.NewInterface("environment").WithFunctions(
 				wit.NewFunction("get-environment").
 					WithResult(wit.NewParam("", wit.NewList(wit.NewTuple(
-						wit.NewPrimitive(wit.String),
-						wit.NewPrimitive(wit.String),
+						wit.String,
+						wit.String,
 					)))),
 				wit.NewFunction("get-arguments").
-					WithResult(wit.NewParam("", wit.NewList(wit.NewPrimitive(wit.String)))),
+					WithResult(wit.NewParam("", wit.NewList(wit.String))),
 				wit.NewFunction("initial-cwd").
-					WithResult(wit.NewParam("", wit.NewOption(wit.NewPrimitive(wit.String)))),
+					WithResult(wit.NewParam("", wit.NewOption(wit.String))),
 			),
 			wit.NewInterface("exit",
 				wit.NewEnum("exit-code",
@@ -255,8 +255,8 @@ func kvStore() wit.Wit {
 		WithPackage(wit.NewPackage("example", "kv-store").WithVersion("2.1.0")).
 		WithInterface(
 			wit.NewInterface("types",
-				wit.NewAlias("key", wit.NewPrimitive(wit.String)),
-				wit.NewAlias("value", wit.NewList(wit.NewPrimitive(wit.Unsigned8))),
+				wit.NewAlias("key", wit.String),
+				wit.NewAlias("value", wit.NewList(wit.Unsigned8)),
 				wit.NewFlags("consistency",
 					wit.NewCase("strong"),
 					wit.NewCase("eventual"),
@@ -268,38 +268,38 @@ func kvStore() wit.Wit {
 				),
 				wit.NewRecord("error",
 					wit.NewField("kind", errorKindRef),
-					wit.NewField("message", wit.NewPrimitive(wit.String)),
+					wit.NewField("message", wit.String),
 				),
 				wit.NewRecord("entry",
 					wit.NewField("key", keyRef),
 					wit.NewField("value", valueRef),
-					wit.NewField("version", wit.NewPrimitive(wit.Unsigned64)),
+					wit.NewField("version", wit.Unsigned64),
 				),
 			),
 			wit.NewInterface("store").WithFunctions(
-				wit.NewFunction("get", wit.NewParam("key", wit.NewPrimitive(wit.String))).
+				wit.NewFunction("get", wit.NewParam("key", wit.String)).
 					WithResult(wit.NewParam("", wit.NewResult(
-						wit.NewOption(wit.NewList(wit.NewPrimitive(wit.Unsigned8))),
-						wit.NewPrimitive(wit.String),
+						wit.NewOption(wit.NewList(wit.Unsigned8)),
+						wit.String,
 					))),
 				wit.NewFunction("set",
-					wit.NewParam("key", wit.NewPrimitive(wit.String)),
-					wit.NewParam("value", wit.NewList(wit.NewPrimitive(wit.Unsigned8))),
+					wit.NewParam("key", wit.String),
+					wit.NewParam("value", wit.NewList(wit.Unsigned8)),
 				).WithResult(wit.NewParam("", wit.NewResult(
-					wit.NewPrimitive(wit.Unsigned64),
-					wit.NewPrimitive(wit.String),
+					wit.Unsigned64,
+					wit.String,
 				))),
-				wit.NewFunction("delete", wit.NewParam("key", wit.NewPrimitive(wit.String))).
+				wit.NewFunction("delete", wit.NewParam("key", wit.String)).
 					WithResult(wit.NewParam("", wit.NewResult(
-						wit.NewPrimitive(wit.Bool),
-						wit.NewPrimitive(wit.String),
+						wit.Bool,
+						wit.String,
 					))),
 				wit.NewFunction("list-keys",
-					wit.NewParam("prefix", wit.NewPrimitive(wit.String)),
-					wit.NewParam("limit", wit.NewPrimitive(wit.Unsigned32)),
+					wit.NewParam("prefix", wit.String),
+					wit.NewParam("limit", wit.Unsigned32),
 				).WithResult(wit.NewParam("", wit.NewResult(
-					wit.NewList(wit.NewPrimitive(wit.String)),
-					wit.NewPrimitive(wit.String),
+					wit.NewList(wit.String),
+					wit.String,
 				))),
 			),
 		).
@@ -330,13 +330,13 @@ func docs() wit.Wit {
 					wit.NewCase("DELETE").WithDocs("DELETE - delete request"),
 				).WithDocs("method is an enum for the request method"),
 				wit.NewRecord("response",
-					wit.NewField("status", wit.NewPrimitive(wit.Unsigned32)).WithDocs("status is the http status code"),
-					wit.NewField("body", wit.NewOption(wit.NewList(wit.NewPrimitive(wit.Unsigned8)))).WithDocs("body is an optional byte array"),
-					wit.NewField("error", wit.NewOption(wit.NewPrimitive(wit.String))).WithDocs("error is an optional error message"),
+					wit.NewField("status", wit.Unsigned32).WithDocs("status is the http status code"),
+					wit.NewField("body", wit.NewOption(wit.NewList(wit.Unsigned8))).WithDocs("body is an optional byte array"),
+					wit.NewField("error", wit.NewOption(wit.String)).WithDocs("error is an optional error message"),
 				).WithDocs("response is the response structure"),
 			).WithFunctions(
 				wit.NewFunction("fetch",
-					wit.NewParam("url", wit.NewPrimitive(wit.String)),
+					wit.NewParam("url", wit.String),
 					wit.NewParam("method", wit.NewReference("method")),
 				).WithResult(wit.NewParam("", responseRef)).
 					WithDocs("fetch calls the url and responds with the response record"),
@@ -354,13 +354,13 @@ func variantTypes() wit.Wit {
 		WithInterface(
 			wit.NewInterface("shapes",
 				wit.NewVariant("shape",
-					wit.NewField("circle", wit.NewPrimitive(wit.Float32)),
-					wit.NewField("rectangle", wit.NewTuple(wit.NewPrimitive(wit.Float32), wit.NewPrimitive(wit.Float32))),
+					wit.NewField("circle", wit.Float32),
+					wit.NewField("rectangle", wit.NewTuple(wit.Float32, wit.Float32)),
 					wit.NewField("point", nil),
 				),
 			).WithFunctions(
 				wit.NewFunction("area", wit.NewParam("s", shapeRef)).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.Float32))),
+					WithResult(wit.NewParam("", wit.Float32)),
 			),
 		).
 		WithWorld(

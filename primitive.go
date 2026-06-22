@@ -24,8 +24,8 @@ func (e *encoder) encodeType(t Type) {
 		e.encodeFlags(*tp)
 	case *Alias:
 		e.encodeAlias(*tp)
-	case *Primitive:
-		e.writeString(string(*tp))
+	case Primitive:
+		e.writeString(string(tp))
 	case *Reference:
 		e.encodeReference(*tp)
 	case *Record:
@@ -54,7 +54,3 @@ const (
 )
 
 func (p Primitive) witType() {}
-
-func NewPrimitive(p Primitive) *Primitive {
-	return &p
-}

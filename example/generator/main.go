@@ -24,11 +24,11 @@ func main() {
 		WithInterface(
 			wit.NewInterface("handler",
 				wit.NewRecord("foo",
-					wit.NewField("foo", wit.NewPrimitive(wit.Char)),
+					wit.NewField("foo", wit.Char),
 				).WithDocs("foo is a record with a nested record"),
 			).WithFunctions(
-				wit.NewFunction("handler", wit.NewParam("name", wit.NewPrimitive(wit.String))).
-					WithResult(wit.NewParam("", wit.NewPrimitive(wit.String))),
+				wit.NewFunction("handler", wit.NewParam("name", wit.String)).
+					WithResult(wit.NewParam("", wit.String)),
 			),
 		)
 
