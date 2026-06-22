@@ -4,8 +4,8 @@ func NewFunction(name string, params ...Param) Function {
 	return Function{Name: name, Params: params}
 }
 
-func (f Function) WithResult(result Param) Function {
-	f.Result = &result
+func (f Function) WithResult(result Type) Function {
+	f.Result = result
 	return f
 }
 
@@ -17,7 +17,7 @@ func (f Function) WithDocs(content string) Function {
 type Function struct {
 	Name   string
 	Params []Param
-	Result *Param
+	Result Type
 	Docs   Docs
 }
 
@@ -44,7 +44,7 @@ func (e *encoder) encodeFunction(f Function) {
 		e.writeString(");")
 	} else {
 		e.writeString(") -> ")
-		e.encodeParam(*f.Result)
+		e.encodeType(f.Result)
 		e.writeString(";")
 	}
 }
