@@ -4,8 +4,8 @@ func NewWit() Wit {
 	return Wit{}
 }
 
-func (w Wit) WithPackage(p *Package) Wit {
-	w.Package = p
+func (w Wit) WithPackage(p Package) Wit {
+	w.Package = &p
 	return w
 }
 

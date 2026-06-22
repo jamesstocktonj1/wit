@@ -4,16 +4,20 @@ import (
 	"fmt"
 )
 
-func NewPackage(namespace, pkg string) *Package {
-	return &Package{Namespace: namespace, Package: pkg}
+func NewPackage(namespace, pkg string) Package {
+	return Package{Namespace: namespace, Package: pkg}
 }
 
-func (p *Package) WithVersion(version string) *Package {
+func NewInterfaceReference(name string) Package {
+	return Package{Interface: []string{name}}
+}
+
+func (p Package) WithVersion(version string) Package {
 	p.Version = version
 	return p
 }
 
-func (p *Package) WithInterface(interfaces ...string) *Package {
+func (p Package) WithInterface(interfaces ...string) Package {
 	p.Interface = append(p.Interface, interfaces...)
 	return p
 }
@@ -29,12 +33,25 @@ type Package struct {
 	Version   string
 }
 
+func (p Package) witImportable() {}
+
 func (p Package) String() string {
-	pkg := fmt.Sprintf("%s:%s", p.Namespace, p.Package)
-	if p.Version != "" {
-		pkg += fmt.Sprintf("@%s", p.Version)
+	hasInterface := len(p.Interface) > 0
+	if p.Namespace == "" || p.Package == "" {
+		if hasInterface {
+			return p.Interface[0]
+		}
+		return ""
 	}
-	return pkg
+
+	s := fmt.Sprintf("%s:%s", p.Namespace, p.Package)
+	if hasInterface {
+		s += "/" + p.Interface[0]
+	}
+	if p.Version != "" {
+		s += "@" + p.Version
+	}
+	return s
 }
 
 func (e *encoder) encodePackage(p Package) {

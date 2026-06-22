@@ -21,6 +21,8 @@ type Interface struct {
 	Docs      Docs
 }
 
+func (i Interface) witImportable() {}
+
 func (e *encoder) encodeInterface(i Interface) {
 	e.encodeDocs(i.Docs)
 	if len(i.TypeDefs) == 0 && len(i.Functions) == 0 {

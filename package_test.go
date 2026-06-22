@@ -39,6 +39,32 @@ func TestPackageString(t *testing.T) {
 			},
 			exp: "foo:bat@3.1.2-rc5",
 		},
+		{
+			name: "interface reference",
+			pkg: Package{
+				Interface: []string{"handler"},
+			},
+			exp: "handler",
+		},
+		{
+			name: "package with interface",
+			pkg: Package{
+				Namespace: "wasi",
+				Package:   "io",
+				Interface: []string{"input"},
+			},
+			exp: "wasi:io/input",
+		},
+		{
+			name: "package with interface and version",
+			pkg: Package{
+				Namespace: "wasi",
+				Package:   "io",
+				Interface: []string{"input"},
+				Version:   "0.2.0",
+			},
+			exp: "wasi:io/input@0.2.0",
+		},
 	}
 
 	for _, tt := range testMatrix {
