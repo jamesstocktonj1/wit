@@ -18,8 +18,8 @@ func main() {
 		WithPackage(wit.NewPackage("foo", "bar").WithVersion("0.1.2-rc1")).
 		WithWorld(
 			wit.NewWorld("foo").
-				WithImports("handler").
-				WithExports("handler"),
+				WithImports(wit.NewInterfaceReference("handler")).
+				WithExports(wit.NewInterfaceReference("handler")),
 		).
 		WithInterface(
 			wit.NewInterface("handler",
