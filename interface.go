@@ -21,6 +21,8 @@ type Interface struct {
 	Docs      Docs
 }
 
+func (i Interface) witImportable() {}
+
 func (e *encoder) encodeInterface(i Interface) {
 	e.encodeDocs(i.Docs)
 	if len(i.TypeDefs) == 0 && len(i.Functions) == 0 {
@@ -49,5 +51,31 @@ func (e *encoder) encodeInterface(i Interface) {
 		first = false
 	}
 	e.closeBlock()
+	e.writeString("}")
+}
+
+func (e *encoder) encodeInlineInterface(i Interface) {
+	e.writeString(i.Name + ": interface {")
+	e.writeReturn()
+	e.openBlock()
+	first := true
+	for _, t := range i.TypeDefs {
+		if !first {
+			e.writeReturn()
+		}
+		e.encodeType(t)
+		e.writeReturn()
+		first = false
+	}
+	for _, f := range i.Functions {
+		if !first {
+			e.writeReturn()
+		}
+		e.encodeFunction(f)
+		e.writeReturn()
+		first = false
+	}
+	e.closeBlock()
+	e.writeIndent()
 	e.writeString("}")
 }

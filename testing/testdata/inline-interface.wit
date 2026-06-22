@@ -1,0 +1,7 @@
+package example:toy;
+
+world toy {
+  export example: interface {
+    do-nothing: func();
+  }
+}

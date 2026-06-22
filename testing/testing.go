@@ -17,7 +17,7 @@ func basic() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("greeter").WithExports("greeting"),
+			wit.NewWorld("greeter").WithExports(wit.NewInterfaceReference("greeting")),
 		)
 }
 
@@ -38,7 +38,7 @@ func listTypes() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("collection-world").WithExports("collection"),
+			wit.NewWorld("collection-world").WithExports(wit.NewInterfaceReference("collection")),
 		)
 }
 
@@ -54,7 +54,7 @@ func optionResult() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("maybe-world").WithExports("maybe"),
+			wit.NewWorld("maybe-world").WithExports(wit.NewInterfaceReference("maybe")),
 		)
 }
 
@@ -80,7 +80,7 @@ func enumFlags() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("permissions-world").WithExports("permissions"),
+			wit.NewWorld("permissions-world").WithExports(wit.NewInterfaceReference("permissions")),
 		)
 }
 
@@ -98,7 +98,7 @@ func multiInterface() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("streams").WithImports("input").WithExports("output"),
+			wit.NewWorld("streams").WithImports(wit.NewInterfaceReference("input")).WithExports(wit.NewInterfaceReference("output")),
 		)
 }
 
@@ -111,8 +111,8 @@ func multiWorld() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("server").WithExports("logger"),
-			wit.NewWorld("client").WithImports("logger"),
+			wit.NewWorld("server").WithExports(wit.NewInterfaceReference("logger")),
+			wit.NewWorld("client").WithImports(wit.NewInterfaceReference("logger")),
 		)
 }
 
@@ -133,7 +133,7 @@ func nestedTypes() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("nested-world").WithExports("deep"),
+			wit.NewWorld("nested-world").WithExports(wit.NewInterfaceReference("deep")),
 		)
 }
 
@@ -154,7 +154,7 @@ func tupleTypes() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("coords-world").WithExports("coords"),
+			wit.NewWorld("coords-world").WithExports(wit.NewInterfaceReference("coords")),
 		)
 }
 
@@ -169,7 +169,7 @@ func aliasTypes() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("alias-world").WithExports("types"),
+			wit.NewWorld("alias-world").WithExports(wit.NewInterfaceReference("types")),
 		)
 }
 
@@ -190,7 +190,7 @@ func complexRecord() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("data-world").WithExports("data"),
+			wit.NewWorld("data-world").WithExports(wit.NewInterfaceReference("data")),
 		)
 }
 
@@ -241,8 +241,8 @@ func wasiCli() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("command").WithImports("stdin", "environment").WithExports("stdout", "exit"),
-			wit.NewWorld("reactor").WithImports("stdin", "stdout", "environment"),
+			wit.NewWorld("command").WithImports(wit.NewInterfaceReference("stdin"), wit.NewInterfaceReference("environment")).WithExports(wit.NewInterfaceReference("stdout"), wit.NewInterfaceReference("exit")),
+			wit.NewWorld("reactor").WithImports(wit.NewInterfaceReference("stdin"), wit.NewInterfaceReference("stdout"), wit.NewInterfaceReference("environment")),
 		)
 }
 
@@ -303,8 +303,8 @@ func kvStore() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("kv-client").WithImports("store"),
-			wit.NewWorld("kv-server").WithExports("store"),
+			wit.NewWorld("kv-client").WithImports(wit.NewInterfaceReference("store")),
+			wit.NewWorld("kv-server").WithExports(wit.NewInterfaceReference("store")),
 		)
 }
 
@@ -342,7 +342,7 @@ func docs() wit.Wit {
 			).WithDocs("data is the main interface in the package `example:docs`\nthis is also a multi-line doc"),
 		).
 		WithWorld(
-			wit.NewWorld("data-world").WithExports("data").WithDocs("data-world exports the data interface"),
+			wit.NewWorld("data-world").WithExports(wit.NewInterfaceReference("data")).WithDocs("data-world exports the data interface"),
 		)
 }
 
@@ -363,6 +363,18 @@ func variantTypes() wit.Wit {
 			),
 		).
 		WithWorld(
-			wit.NewWorld("shapes-world").WithExports("shapes"),
+			wit.NewWorld("shapes-world").WithExports(wit.NewInterfaceReference("shapes")),
+		)
+}
+
+func inlineInterface() wit.Wit {
+	return wit.NewWit().
+		WithPackage(wit.NewPackage("example", "toy")).
+		WithWorld(
+			wit.NewWorld("toy").WithExports(
+				wit.NewInterface("example").WithFunctions(
+					wit.NewFunction("do-nothing"),
+				),
+			),
 		)
 }
