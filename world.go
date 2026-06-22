@@ -54,14 +54,12 @@ func (e *encoder) encodeWorld(w World) {
 		e.writeIndent()
 		e.writeString("import ")
 		e.encodeImport(im)
-		e.writeString(";")
 		e.writeReturn()
 	}
 	for _, ex := range w.Exports {
 		e.writeIndent()
 		e.writeString("export ")
 		e.encodeImport(ex)
-		e.writeString(";")
 		e.writeReturn()
 	}
 	e.closeBlock()
@@ -76,8 +74,9 @@ func (e *encoder) encodeImport(i Importable) {
 	switch t := i.(type) {
 	case Package:
 		e.writeString(t.String())
+		e.writeString(";")
 	case Interface:
-		e.encodeInterface(t)
+		e.encodeInlineInterface(t)
 	default:
 		e.err = fmt.Errorf("unknown importable type - %+v", t)
 	}

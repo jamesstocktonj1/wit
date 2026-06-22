@@ -366,3 +366,15 @@ func variantTypes() wit.Wit {
 			wit.NewWorld("shapes-world").WithExports(wit.NewInterfaceReference("shapes")),
 		)
 }
+
+func inlineInterface() wit.Wit {
+	return wit.NewWit().
+		WithPackage(wit.NewPackage("example", "toy")).
+		WithWorld(
+			wit.NewWorld("toy").WithExports(
+				wit.NewInterface("example").WithFunctions(
+					wit.NewFunction("do-nothing"),
+				),
+			),
+		)
+}

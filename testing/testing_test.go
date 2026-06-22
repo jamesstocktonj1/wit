@@ -90,6 +90,11 @@ var testMatrix = []struct {
 		witStruct: variantTypes(),
 		file:      "variant.wit",
 	},
+	{
+		name:      "inline-interface",
+		witStruct: inlineInterface(),
+		file:      "inline-interface.wit",
+	},
 }
 
 func TestIntegration(t *testing.T) {
