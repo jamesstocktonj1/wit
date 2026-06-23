@@ -95,6 +95,11 @@ var testMatrix = []struct {
 		witStruct: inlineInterface(),
 		file:      "inline-interface.wit",
 	},
+	{
+		name:      "wasip3-types",
+		witStruct: p3Types(),
+		file:      "p3-types.wit",
+	},
 }
 
 func TestIntegration(t *testing.T) {

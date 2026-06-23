@@ -1,0 +1,12 @@
+package example:p3;
+
+interface handler {
+  record response {
+    body: stream<u8>,
+    status: u16
+  }
+
+  send: func(data: stream<u8>) -> future<u16>;
+
+  fetch: async func(url: string) -> response;
+}
