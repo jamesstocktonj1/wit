@@ -14,10 +14,16 @@ func (f Function) WithDocs(content string) Function {
 	return f
 }
 
+func (f Function) SetAsync() Function {
+	f.Async = true
+	return f
+}
+
 type Function struct {
 	Name   string
 	Params []Param
 	Result Type
+	Async  bool
 	Docs   Docs
 }
 
@@ -33,7 +39,11 @@ type Param struct {
 func (e *encoder) encodeFunction(f Function) {
 	e.encodeDocs(f.Docs)
 	e.writeIndent()
-	e.writeString(f.Name + ": func(")
+	e.writeString(f.Name + ": ")
+	if f.Async {
+		e.writeString("async ")
+	}
+	e.writeString("func(")
 	for i, p := range f.Params {
 		e.encodeParam(p)
 		if i < len(f.Params)-1 {
