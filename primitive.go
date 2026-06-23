@@ -30,6 +30,10 @@ func (e *encoder) encodeType(t Type) {
 		e.encodeReference(*tp)
 	case *Record:
 		e.encodeRecord(*tp)
+	case *Stream:
+		e.encodeStream(*tp)
+	case *Future:
+		e.encodeFuture(*tp)
 	default:
 		e.err = fmt.Errorf("unknown type - %+v", t)
 	}

@@ -378,3 +378,22 @@ func inlineInterface() wit.Wit {
 			),
 		)
 }
+
+func p3Types() wit.Wit {
+	return wit.NewWit().
+		WithPackage(wit.NewPackage("example", "p3")).
+		WithInterface(
+			wit.NewInterface("handler",
+				wit.NewRecord("response",
+					wit.NewField("body", wit.NewStream(wit.Unsigned8)),
+					wit.NewField("status", wit.Unsigned16),
+				),
+			).WithFunctions(
+				wit.NewFunction("send", wit.NewParam("data", wit.NewStream(wit.Unsigned8))).
+					WithResult(wit.NewFuture(wit.Unsigned16)),
+				wit.NewFunction("fetch", wit.NewParam("url", wit.String)).
+					WithResult(wit.NewReference("response")).
+					SetAsync(),
+			),
+		)
+}
