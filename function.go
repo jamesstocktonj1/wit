@@ -19,11 +19,17 @@ func (f Function) SetAsync() Function {
 	return f
 }
 
+func (f Function) SetStatic() Function {
+	f.Static = true
+	return f
+}
+
 type Function struct {
 	Name   string
 	Params []Param
 	Result Type
 	Async  bool
+	Static bool
 	Docs   Docs
 }
 
@@ -42,6 +48,8 @@ func (e *encoder) encodeFunction(f Function) {
 	e.writeString(f.Name + ": ")
 	if f.Async {
 		e.writeString("async ")
+	} else if f.Static {
+		e.writeString("static ")
 	}
 	e.writeString("func(")
 	for i, p := range f.Params {
