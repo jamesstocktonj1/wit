@@ -100,6 +100,11 @@ var testMatrix = []struct {
 		witStruct: p3Types(),
 		file:      "p3-types.wit",
 	},
+	{
+		name:      "resource",
+		witStruct: resourceType(),
+		file:      "resource.wit",
+	},
 }
 
 func TestIntegration(t *testing.T) {
