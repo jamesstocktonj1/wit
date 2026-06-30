@@ -1,0 +1,13 @@
+package example:resource;
+
+interface data {
+  resource blob {
+    write: func(bytes: list<u8>);
+    read: func(n: u32) -> list<u8>;
+    merge: static func(lhs: borrow<blob>, rhs: borrow<blob>) -> blob;
+  }
+}
+
+world resource-world {
+  import data;
+}

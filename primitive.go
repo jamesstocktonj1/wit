@@ -8,6 +8,8 @@ type Type interface {
 
 func (e *encoder) encodeType(t Type) {
 	switch tp := t.(type) {
+	case *Borrow:
+		e.encodeBorrow(*tp)
 	case *List:
 		e.encodeList(*tp)
 	case *Option:
@@ -30,6 +32,8 @@ func (e *encoder) encodeType(t Type) {
 		e.encodeReference(*tp)
 	case *Record:
 		e.encodeRecord(*tp)
+	case *Resource:
+		e.encodeResource(*tp)
 	case *Stream:
 		e.encodeStream(*tp)
 	case *Future:

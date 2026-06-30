@@ -4,7 +4,7 @@ import "github.com/jamesstocktonj1/wit"
 
 func basic() wit.Wit {
 	return wit.NewWit().
-		WithPackage(wit.NewPackage("wasi", "test")).
+		WithPackage(wit.NewPackage("example", "basic")).
 		WithInterface(
 			wit.NewInterface("greeting",
 				wit.NewRecord("message",
@@ -395,5 +395,27 @@ func p3Types() wit.Wit {
 					WithResult(wit.NewReference("response")).
 					SetAsync(),
 			),
+		)
+}
+
+func resourceType() wit.Wit {
+	return wit.NewWit().
+		WithPackage(wit.NewPackage("example", "resource")).
+		WithInterface(
+			wit.NewInterface("data",
+				wit.NewResource("blob",
+					wit.NewFunction("write", wit.NewParam("bytes", wit.NewList(wit.Unsigned8))),
+					wit.NewFunction("read", wit.NewParam("n", wit.Unsigned32)).
+						WithResult(wit.NewList(wit.Unsigned8)),
+					wit.NewFunction("merge",
+						wit.NewParam("lhs", wit.NewBorrow(wit.NewReference("blob"))),
+						wit.NewParam("rhs", wit.NewBorrow(wit.NewReference("blob"))),
+					).SetStatic().WithResult(wit.NewReference("blob")),
+				),
+			),
+		).
+		WithWorld(
+			wit.NewWorld("resource-world").
+				WithImports(wit.NewInterfaceReference("data")),
 		)
 }
